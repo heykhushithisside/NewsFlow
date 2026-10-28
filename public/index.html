@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewsFlow – DFA + AI Fake News Detector</title>
+  <meta name="description" content="TruthLens uses a DFA pattern engine and HuggingFace BERT AI to detect fake news — 100% free, no credit card needed." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="url(#lg)" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M2 17l10 5 10-5" stroke="url(#lg)" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M2 12l10 5 10-5" stroke="url(#lg)" stroke-width="1.8" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="lg" x1="2" y1="2" x2="22" y2="22">
+                <stop offset="0%" stop-color="#a855f7"/>
+                <stop offset="100%" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">News<span class="logo-accent">Flow</span></span>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-dfa">⚙ DFA Engine</span>
+        <span class="badge badge-ai">🤗 HuggingFace AI</span>
+      </div>
+    </div>
+  </header>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-tag">Hybrid Detection · DFA Pattern Analysis + HuggingFace BERT AI</div>
+    <h1 class="hero-title">Is This News <span class="gradient-text">Real or Fake?</span></h1>
+    <p class="hero-subtitle">
+      A custom <strong>DFA (Deterministic Finite Automaton)</strong> scans for linguistic fake-news patterns,
+      while a <strong>HuggingFace BERT model</strong> trained on fake news data performs AI classification — both combined into one hybrid verdict.
+    </p>
+    <div class="source-pills">
+      <div class="source-pill pill-dfa">
+        <span class="pdot dot-purple"></span>DFA Pattern Engine
+      </div>
+      <div class="sdiv">+</div>
+      <div class="source-pill pill-ai">
+        <span class="pdot dot-cyan"></span>HuggingFace BERT AI
+      </div>
+      <div class="sdiv">=</div>
+      <div class="source-pill pill-verdict">
+        <span class="pdot dot-green"></span>Hybrid Verdict
+      </div>
+    </div>
+  </section>
+  <main class="main">
+    <!-- API Key setup -->
+    <div class="setup-card" id="setupCard">
+      <div class="setup-head" onclick="toggleSetup()">
+        <span class="setup-icon">🔑</span>
+        <div>
+          <div class="setup-title">HuggingFace API Token <span class="free-badge">FREE</span></div>
+          <div class="setup-sub">DFA works offline — HuggingFace token is free, no credit card</div>
+        </div>
+        <button class="setup-chevron" id="setupChevron">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="setup-body" id="setupBody">
+        <div class="setup-row">
+          <div class="setup-field">
+            <label class="field-label">
+              <span class="pdot dot-cyan" style="width:6px;height:6px"></span>
+              HuggingFace Access Token
+              <a href="https://huggingface.co/settings/tokens" target="_blank" class="field-link">Get free token →</a>
+            </label>
+            <input type="password" id="hfKey" class="field-input" placeholder="hf_..." />
+          </div>
+        </div>
+        <div class="setup-note">
+          <span>💡</span>
+          <span>The DFA engine runs <strong>100% offline</strong>. For HuggingFace AI, sign up free at <strong>huggingface.co</strong> → Settings → Access Tokens → New token (read). No credit card ever needed.</span>
+        </div>
+        <div class="setup-actions">
+          <button class="btn-save" onclick="saveKey()">Save Key</button>
+          <span class="save-status" id="saveStatus"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Input Card -->
+    <div class="input-card">
+      <div class="input-head">
+        <h2 class="input-title">Paste News Article or Claim</h2>
+        <span class="char-count" id="charCount">0 / 5,000</span>
+      </div>
+      <textarea
+        id="newsInput"
+        class="news-textarea"
+        placeholder="Paste the news headline, article, or claim here…&#10;&#10;Example: &quot;SHOCKING: Scientists PROVE that 5G towers cause COVID-19 — Government hiding the truth!!!&quot;"
+        rows="7"
+        maxlength="5000"
+        oninput="updateCharCount()"
+      ></textarea>
+      <div class="input-foot">
+        <div class="check-opts">
+          <label class="chk">
+            <input type="checkbox" id="useDFA" checked />
+            <span class="chkmark"></span>DFA Engine
+          </label>
+          <label class="chk">
+            <input type="checkbox" id="useGemini" checked />
+            <span class="chkmark"></span>Gemini AI
+          </label>
+        </div>
+        <div class="input-btns">
+          <button class="btn-ghost" onclick="clearAll()">Clear</button>
+          <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="white" stroke-width="1.8"/><path d="M11 11l3 3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Analyze
+            <div class="btn-shimmer"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Loading -->
+    <div id="loadingSection" style="display:none">
+      <div class="loading-card">
+        <div class="pulse-row">
+          <div class="pulse-dot pd1"></div>
+          <div class="pulse-dot pd2"></div>
+          <div class="pulse-dot pd3"></div>
+        </div>
+        <div class="load-label" id="loadLabel">Running analysis…</div>
+        <div class="load-steps">
+          <div class="lstep" id="ls1"><span class="lstep-dot"></span>DFA pattern matching</div>
+          <div class="lstep" id="ls2"><span class="lstep-dot"></span>Gemini AI semantic analysis</div>
+          <div class="lstep" id="ls3"><span class="lstep-dot"></span>Computing hybrid verdict</div>
+        </div>
+      </div>
+    </div>
+    <!-- Results -->
+    <div id="resultsSection" style="display:none">
+      <!-- Verdict Banner -->
+      <div class="verdict-banner" id="verdictBanner">
+        <div class="verdict-emoji" id="verdictEmoji"></div>
+        <div class="verdict-info">
+          <div class="verdict-label">Hybrid Verdict</div>
+          <div class="verdict-text" id="verdictText"></div>
+        </div>
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="white" stroke-width="9"
+              stroke-linecap="round" stroke-dasharray="238.76"
+              stroke-dashoffset="238.76" id="scoreArc"
+              transform="rotate(-90 50 50)" style="transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
+          </svg>
+          <div class="score-label" id="scoreLabel">0%</div>
+        </div>
+      </div>
+      <!-- Two Panels -->
+      <div class="panels">
+        <!-- DFA Panel -->
+        <div class="panel panel-dfa">
+          <div class="panel-top">
+            <span class="panel-chip chip-purple">⚙ DFA Engine</span>
+            <span class="panel-stat" id="dfaStatChip">–</span>
+          </div>
+          <h3 class="panel-title">Pattern Analysis</h3>
+          <!-- DFA Visualizer -->
+          <div class="dfa-visualizer" id="dfaVisualizer">
+            <div class="dfa-track" id="dfaTrack"></div>
+          </div>
+          <!-- Category breakdown -->
+          <div class="cat-grid" id="catGrid"></div>
+          <!-- Matched patterns list -->
+          <div class="matches-box">
+            <div class="matches-title">Matched Patterns</div>
+            <div class="matches-list" id="matchesList"></div>
+          </div>
+        </div>
+        <!-- Gemini Panel -->
+        <div class="panel panel-ai">
+          <div class="panel-top">
+            <span class="panel-chip chip-cyan">🤗 HuggingFace BERT</span>
+            <span class="panel-stat" id="aiStatChip">–</span>
+          </div>
+          <h3 class="panel-title">BERT AI Classification</h3>
+          <div class="ai-bars" id="aiBars">
+            <div class="abar">
+              <span class="abar-lbl">Real confidence</span>
+              <div class="abar-track"><div class="abar-fill fill-purple" id="b-cred"></div></div>
+              <span class="abar-val" id="v-cred">–</span>
+            </div>
+            <div class="abar">
+              <span class="abar-lbl">Fake confidence</span>
+              <div class="abar-track"><div class="abar-fill fill-red" id="b-sens"></div></div>
+              <span class="abar-val" id="v-sens">–</span>
+            </div>
+            <div class="abar">
+              <span class="abar-lbl">DFA Score</span>
+              <div class="abar-track"><div class="abar-fill fill-orange" id="b-bias"></div></div>
+              <span class="abar-val" id="v-bias">–</span>
+            </div>
+          </div>
+          <div class="ai-analysis" id="aiAnalysis">
+            <div class="ai-skeleton"></div>
+          </div>
+          <div class="ai-model-info">
+            <span class="model-tag">Model: <code>mrm8488/bert-tiny-finetuned-fake-news-detection</code></span>
+          </div>
+        </div>
+      </div>
+      <!-- Summary Card -->
+      <div class="summary-card" id="summaryCard">
+        <div class="summary-head">💡 Hybrid Analysis Summary</div>
+        <div class="summary-body" id="summaryBody"></div>
+      </div>
+      <!-- Actions -->
+      <div class="result-actions">
+        <button class="btn-reset" onclick="resetAll()">🔄 Analyze Another</button>
+        <button class="btn-copy" onclick="copyResult()">📋 Copy Report</button>
+      </div>
+    </div>
+    <!-- Error -->
+    <div id="errorSection" style="display:none">
+      <div class="error-card">
+        <div class="err-icon">⚠️</div>
+        <div class="err-title" id="errTitle"></div>
+        <div class="err-body" id="errBody"></div>
+        <button class="btn-reset" onclick="resetAll()">Try Again</button>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <p>TruthLens &nbsp;·&nbsp; DFA Pattern Engine + HuggingFace BERT AI</p>
+    <p class="footer-sub">100% free hybrid fake news detection — DFA offline engine + free HuggingFace model</p>
+  </footer>
+  <script src="dfa.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
